@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.GridLayout;
 import android.widget.GridView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -15,7 +16,12 @@ public class MenuActivity extends AppCompatActivity {
 
 
     GridLayout gridView;
+
+    private FirebaseAuth mAuth;
+
     CardView mProfile, mTrip, mHire, mHistory, mPasssword, mLogout;
+    private  FirebaseAuth.AuthStateListener mAth;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,11 +37,52 @@ public class MenuActivity extends AppCompatActivity {
         mPasssword = (CardView) findViewById(R.id.change_password);
         mLogout = (CardView) findViewById(R.id.logout);
 
+        mAuth = FirebaseAuth.getInstance();
+
+        mAth = firebaseAuth -> {
+
+        };
+
         mProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FirebaseAuth.getInstance().signOut();
                 Intent intent = new Intent(MenuActivity.this, EditProfileActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        mTrip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MenuActivity.this, TripHistoryActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        mHire.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MenuActivity.this, HireBikeActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        mHistory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MenuActivity.this, HireBikeHistoryActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        mPasssword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MenuActivity.this, ChangePasswordActivity.class);
                 startActivity(intent);
                 finish();
             }
@@ -61,5 +108,11 @@ public class MenuActivity extends AppCompatActivity {
         Intent intent = new Intent(MenuActivity.this, CustomerMapActivity.class);
         startActivity(intent);
         finish();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mAuth.addAuthStateListener(mAth);
     }
 }

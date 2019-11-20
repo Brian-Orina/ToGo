@@ -20,7 +20,7 @@
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <EditText
-        android:id="@+id/firstname"
+        android:id="@+id/name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="15dp"
@@ -43,6 +43,15 @@
         android:digits="0123456789+"
         android:hint="Enter Phone Number eg 0700000000"
         android:inputType="phone" />
+
+        <EditText
+            android:id="@+id/id_number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:digits="0123456789+"
+            android:hint="Enter Your ID Number"
+            android:inputType="phone" />
 
     <EditText
         android:id="@+id/password"

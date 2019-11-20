@@ -25,7 +25,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class RegisterActivity extends AppCompatActivity {
-    private EditText mEmail, mPassword,mEditTextPhone, Firstname, PasswordAgain;
+    private EditText mEmail, mPassword,mEditTextPhone, mEditTextId, mName, PasswordAgain;
     private Button mRegistration;
     private RadioGroup mRadioGroup;
     private ProgressDialog mProgressDialog;
@@ -69,17 +69,17 @@ public class RegisterActivity extends AppCompatActivity {
         mPassword = (EditText) findViewById(R.id.password);
 
         mEditTextPhone = (EditText) findViewById(R.id.login_edittext_phone);
+        mEditTextId = (EditText) findViewById(R.id.id_number);
 
         mRadioGroup = (RadioGroup) findViewById(R.id.radio_group);
 
         mRadioGroup.check(R.id.driver);
 
-
         mRegistration = (Button) findViewById(R.id.register);
 
         mProgressDialog = new ProgressDialog(this);
 
-        Firstname = (EditText) findViewById(R.id.firstname);
+        mName = (EditText) findViewById(R.id.name);
 
         PasswordAgain = (EditText) findViewById(R.id.conf_password);
 
@@ -90,8 +90,9 @@ public class RegisterActivity extends AppCompatActivity {
                 final String email = mEmail.getText().toString();
                 final String password = mPassword.getText().toString();
                 final String mPhone = mEditTextPhone.getText().toString().trim();
+                final String mId = mEditTextId.getText().toString().trim();
 
-                final String firstname = Firstname.getText().toString();
+                final String name = mName.getText().toString();
                 final String PassAgain = PasswordAgain.getText().toString();
 
                 String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
@@ -99,9 +100,9 @@ public class RegisterActivity extends AppCompatActivity {
                 int selectId = mRadioGroup.getCheckedRadioButtonId();
                 final RadioButton radioButton = (RadioButton) findViewById(selectId);
 
-                if(TextUtils.isEmpty(firstname)){
-                    Firstname.setError("Full Names required");
-                    Firstname.requestFocus();
+                if(TextUtils.isEmpty(name)){
+                    mName.setError("Full Names required");
+                    mName.requestFocus();
                     Toast.makeText(RegisterActivity.this, "Full Names required", Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -127,6 +128,18 @@ public class RegisterActivity extends AppCompatActivity {
                 if (mPhone.length() <9||mPhone.length() ==9  ){
                     mEditTextPhone.setError("Phone Number Must be 10 digits");
                     mEditTextPhone.requestFocus();
+                    return;
+                }
+
+                if (TextUtils.isEmpty(mId)){
+                    mEditTextId.setError("Enter ID Number");
+                    mEditTextId.requestFocus();
+                    Toast.makeText(RegisterActivity.this, "ID Number required", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (mId.length() <7||mId.length() ==7  ){
+                    mEditTextId.setError("ID Number Must be 8 digits");
+                    mEditTextId.requestFocus();
                     return;
                 }
 
@@ -174,11 +187,13 @@ public class RegisterActivity extends AppCompatActivity {
                             DatabaseReference current_user_role = FirebaseDatabase.getInstance().getReference().child("Users").child(user_id).child("role");
                             DatabaseReference current_user_email = FirebaseDatabase.getInstance().getReference().child("Users").child(user_id).child("email");
                             DatabaseReference current_user_phone = FirebaseDatabase.getInstance().getReference().child("Users").child(user_id).child("phone");
-                            DatabaseReference current_user_first = FirebaseDatabase.getInstance().getReference().child("Users").child(user_id).child("FirstName");
+                            DatabaseReference current_user_name = FirebaseDatabase.getInstance().getReference().child("Users").child(user_id).child("name");
+                            DatabaseReference current_user_id = FirebaseDatabase.getInstance().getReference().child("Users").child(user_id).child("mId");
 
                             current_user_email.setValue(email);
                             current_user_phone.setValue(mPhone);
-                            current_user_first.setValue(firstname);
+                            current_user_name.setValue(name);
+                            current_user_id.setValue(mId);
                             current_user_role.setValue(mRole);
                             mProgressDialog.dismiss();
                         }

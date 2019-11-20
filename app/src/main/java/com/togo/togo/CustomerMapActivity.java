@@ -19,6 +19,9 @@ public class CustomerMapActivity extends FragmentActivity implements OnMapReadyC
 
     private GoogleMap mMap;
     private Button mLogout, mMenu, mRequest;
+    private FirebaseAuth mAuth;
+    private  FirebaseAuth.AuthStateListener mAth;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +35,12 @@ public class CustomerMapActivity extends FragmentActivity implements OnMapReadyC
         mLogout = (Button) findViewById(R.id.logout);
         mRequest = (Button) findViewById(R.id.request);
         mMenu = (Button) findViewById(R.id.menu);
+
+        mAuth = FirebaseAuth.getInstance();
+        mAth = firebaseAuth -> {
+
+        };
+
 
         mLogout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,6 +60,11 @@ public class CustomerMapActivity extends FragmentActivity implements OnMapReadyC
                 return;
             }
         });
+    }
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mAuth.addAuthStateListener(mAth);
     }
 
 

@@ -15,7 +15,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".EditProfileActivity"></activity>
+        <activity android:name=".ChangePasswordActivity"
+            android:label="Change Password"></activity>
+        <activity android:name=".HireBikeHistoryActivity"
+            android:label="My Bike Hire History"/>
+        <activity android:name=".HireBikeActivity"
+            android:label="Hire Bike"/>
+        <activity android:name=".TripHistoryActivity"
+            android:label="My Trip History"/>
+        <activity
+            android:name=".EditProfileActivity"
+            android:label="Edit Profile" />
         <activity
             android:name=".MenuActivity"
             android:theme="@style/AppTheme.NoActionBar" />
